@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -46,44 +47,10 @@
 
 	<center>
 		<h4 class=" text-primary">Check-in Patient</h4>
-
-		<!-- 
-	<div class="jumbotron">
-
-		<form:form action="savePatient" method="post" modelAttribute="patient">
-
-			<table class = "text-primary">
-				<form:hidden path="id" />
-				<tr>
-					<td>Patient ID:</td>
-					<td><form:input path="pid" /></td>
-				</tr>
-				<tr>
-					<td>Check-in Date/Time:</td>
-					<td><form:input path="checkin_datetime" /></td>
-				</tr>
-				<tr>
-					<td>VisitReason:</td>
-					<td><form:input path="visitreason" /></td>
-				</tr>
-				
-				<tr>
-					<td colspan="2" align="center"><input type="submit"
-						value="Save"></td>
-				</tr>
-			</table>
-
-		</form:form>
-
-	</div>
-	 -->
 	</center>
 
 	<center>
 		<h6 class="text-info">${msg}</h6>
 	</center>
-
-
-
 </body>
 </html>

@@ -44,7 +44,7 @@
 	<br>
 
 	<center>
-		<h4 class=" text-primary">Check-in Patient</h4>
+		<h4 class=" text-primary">Check-out Patient</h4>
 	</center>
 
 </body>
