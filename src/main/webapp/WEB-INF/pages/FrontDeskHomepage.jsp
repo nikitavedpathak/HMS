@@ -62,7 +62,7 @@
 				<c:forEach var="r" items="${prl}" varStatus="status">
 
 					<tr>
-						<td>${r.pid}</td>
+						<td>${patlist[status.index].firstname} ${patlist[status.index].middlename} ${patlist[status.index].lastname}</td>
 						<td>${r.visitdatetime}</td>
 					</tr>
 
