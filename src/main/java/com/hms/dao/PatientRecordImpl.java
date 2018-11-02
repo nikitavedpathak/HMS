@@ -55,14 +55,31 @@ public class PatientRecordImpl implements PatientRecordDAO
 	}
 
 
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public List getAllPatientAndRecords() {
+//		// TODO Auto-generated method stub
+//
+//		String Sql = "select firstname, visitdatetime from PatientRecord as pr, Patient as p where pr.pid = p.pid";
+//		return sessionfactory.getCurrentSession().createSQLQuery(Sql).list();
+//
+//	}
+
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List getAllPatientAndRecords() {
+	public List<PatientRecord> getAllCheckinPatient() {
 		// TODO Auto-generated method stub
+		System.out.println("1");
+		//String sql = "select * from PatientRecord where paymenttype is NULL and DATE(visitdatetime) = DATE(SYSDATE())";		
+		return sessionfactory.getCurrentSession().createQuery("from PatientRecord where paymenttype is null and DATE(visitdatetime) = DATE(sysdate())").list();
+	}
 
-		String Sql = "select firstname, visitdatetime from PatientRecord as pr, Patient as p where pr.pid = p.pid";
-		return sessionfactory.getCurrentSession().createSQLQuery(Sql).list();
-
+	@Override
+	public PatientRecord updatePatientRecord(PatientRecord pr) {
+		// TODO Auto-generated method stub
+		sessionfactory.getCurrentSession().update(pr);
+		return pr;
 	}
 
 
