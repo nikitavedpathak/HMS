@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -42,10 +43,48 @@
 
 	</nav>
 	<br>
-
+	<h6>${msg }</h6>
 	<center>
 		<h4 class=" text-primary">Check-out Patient</h4>
 	</center>
+
+	<div>
+
+		<table class="table table-bordered">
+
+			<thead>
+				<th>Patient Name</th>
+				<th>Ready For Checkout</th>
+				<th>Payment Type</th>
+				<th>Action</th>
+
+			</thead>
+
+			<tbody>
+				<c:forEach var="r" items="${prlist}" varStatus="status">
+
+					<tr>
+						<td>${patlist[status.index].firstname}
+							${patlist[status.index].middlename}
+							${patlist[status.index].lastname}</td>
+						<td>${r.visitdatetime}</td>
+
+						<td><select id="paymenttype" name="paymenttype">
+								<option value="cash">Pay by Cash</option>
+								<option value="insurance">Pay by Insurance</option>
+						</select></td>
+						<td><a href="checkoutpatient?id=${r.visitid}&paymenttype=document.getElementById('paymenttype').value">Checkout</a>
+					</tr>
+
+				</c:forEach>
+			</tbody>
+
+		</table>
+
+	</div>
+
+
+
 
 </body>
 </html>
