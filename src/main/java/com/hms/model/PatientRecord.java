@@ -27,7 +27,17 @@ public class PatientRecord implements Serializable
 	@Column
 	private String reasonforvisit;
 	
+	@Column
+	private String paymenttype;	
 	
+
+	public String getPaymenttype() {
+		return paymenttype;
+	}
+
+	public void setPaymenttype(String paymenttype) {
+		this.paymenttype = paymenttype;
+	}
 
 	public int getVisitid() {
 		return visitid;
