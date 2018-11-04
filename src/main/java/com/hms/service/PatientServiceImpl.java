@@ -52,4 +52,11 @@ public class PatientServiceImpl implements PatientService
 		return patientdao.is_Patient(patientid, Password);
 	}
 
+	@Override
+	public Patient searchpatient(String firstname, String lastname, int phoneno) {
+		// TODO Auto-generated method stub
+		System.out.println("earch Patient Service");
+		return patientdao.searchpatient(firstname, lastname, phoneno);
+	}
+
 }
