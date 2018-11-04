@@ -17,6 +17,8 @@ public interface PatientService
 
 	public Patient updatePatient(Patient patient);
 	
+	public Patient searchpatient(String firstname, String lastname, int phoneno);
+	
 	public Boolean is_Patient(int patientid, String Password);
 	
 	
