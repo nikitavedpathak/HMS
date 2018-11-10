@@ -80,14 +80,16 @@ public class LoginController {
 			{
 				System.out.println("profile : "+employee.getProfile().toString());
 				model.addObject("E",employee );
-				List<PatientRecord> prlist = prsservice.getAllRecords();
+				//List<PatientRecord> prlist = prsservice.getAllRecords();
+				List<PatientRecord> prlist = prsservice.getAllCheckinPatient();
 				System.out.println("sucess");	
 
 				List<Patient> patientlist = new ArrayList<Patient>();
 				Iterator<PatientRecord> it = prlist.iterator();
 				while(it.hasNext())
 				{
-					PatientRecord pr = (PatientRecord) it.next();
+					//System.out.println("inside while loop"+ it.next());
+					PatientRecord pr = it.next();
 					System.out.println(pr.getPid());
 					int i = pr.getPid();
 					Patient P = paservice.getPatient(i);
@@ -102,6 +104,24 @@ public class LoginController {
 				model.setViewName("FrontDeskHomepage");
 				session.setAttribute("E", employee);
 				return model;
+			}
+			else if(employee.getProfile().toString().equals("Doctor") || employee.getProfile().toString().equals("Nurse")) 
+			{
+				System.out.println("profile: "+ employee.getProfile());
+				model.addObject("E",employee);
+				model.setViewName("DiagnosisHomepage");
+				session.setAttribute("E", employee);
+				return model;			
+				
+			}
+			else if(employee.getProfile().toString().equals("Admin")) 
+			{
+				System.out.println("profile: "+ employee.getProfile());
+				model.addObject("E",employee);
+				model.setViewName("AdminHomepage");
+				session.setAttribute("E", employee);
+				return model;			
+				
 			}
 		}
 		System.out.println("Inside do login method of login controller and credentials are not valid");
