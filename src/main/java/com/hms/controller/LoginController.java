@@ -1,8 +1,10 @@
 package com.hms.controller;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import org.jboss.logging.Logger;
@@ -12,9 +14,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.hms.model.Checkinstatus;
 import com.hms.model.Employee;
 import com.hms.model.Patient;
 import com.hms.model.PatientRecord;
+import com.hms.service.CheckinstatusService;
 import com.hms.service.EmployeeService;
 import com.hms.service.PatientRecordService;
 import com.hms.service.PatientRecordServiceImpl;
@@ -41,6 +46,9 @@ public class LoginController {
 
 	@Autowired
 	private PatientService paservice;
+	
+	@Autowired 
+	private CheckinstatusService checkinservice;
 
 
 	//we declare our bean by providing a method on the controller
@@ -80,20 +88,20 @@ public class LoginController {
 			{
 				System.out.println("profile : "+employee.getProfile().toString());
 				model.addObject("E",employee );
-				//List<PatientRecord> prlist = prsservice.getAllRecords();
-				List<PatientRecord> prlist = prsservice.getAllCheckinPatient();
+				List<Checkinstatus> cslist = checkinservice.getAllCheckinstatuss();
 				System.out.println("sucess");	
 
 				List<Patient> patientlist = new ArrayList<Patient>();
-				Iterator<PatientRecord> it = prlist.iterator();
+				List<PatientRecord> prlist = new ArrayList<PatientRecord>();
+				Iterator<Checkinstatus> it = cslist.iterator();
 				while(it.hasNext())
 				{
 					//System.out.println("inside while loop"+ it.next());
-					PatientRecord pr = it.next();
-					System.out.println(pr.getPid());
-					int i = pr.getPid();
-					Patient P = paservice.getPatient(i);
+					Checkinstatus cs = it.next();
+					PatientRecord pr= prsservice.getPatientRecord(cs.getVisitid());
+					Patient P = paservice.getPatient(pr.getPid());
 					patientlist.add(P);
+					prlist.add(pr);
 				}
 
 				System.out.println(patientlist);
@@ -109,7 +117,28 @@ public class LoginController {
 			{
 				System.out.println("profile: "+ employee.getProfile());
 				model.addObject("E",employee);
-				model.setViewName("DiagnosisHomepage");
+				List<Checkinstatus> checkinpatlist = checkinservice.getAllCheckinstatuss();
+				List<Patient> palist = new ArrayList<Patient>();
+				List<Employee> takencarebynurse =new ArrayList<Employee>();
+				List<Employee> takencarebydoctor = new ArrayList<Employee>();
+//				HashMap<Employee, Employee> examgroup = new HashMap<Employee,Employee>();
+//				Map<PatientRecord,HashMap<Employee,Employee>> prlist = new HashMap<PatientRecord,HashMap<Employee,Employee>>();
+				Iterator<Checkinstatus> li = checkinpatlist.iterator();
+				while(li.hasNext())
+				{
+					Checkinstatus cs = li.next();
+					PatientRecord pr = prsservice.getPatientRecord(cs.getVisitid());
+					Patient pat = paservice.getPatient(pr.getPid());
+					takencarebynurse.add(empservice.getEmployee(pr.getNurseid()));
+					takencarebydoctor.add(empservice.getEmployee(pr.getDoctorid()));
+					palist.add(pat);
+				}
+				
+				model.addObject("nurse",takencarebynurse);
+				model.addObject("doctor",takencarebydoctor);
+				model.addObject("checkinlist",checkinpatlist);
+				model.addObject("patlist",palist);
+				model.setViewName("ExaminationHomepage");
 				session.setAttribute("E", employee);
 				return model;			
 				
