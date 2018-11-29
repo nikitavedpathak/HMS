@@ -23,19 +23,22 @@
 </head>
 
 <script>
+	$(document).ready(function(e) {
+		
+		var loginprofile = '${E.profile}';
+		//alert(loginprofile);
+		
+		if (loginprofile != 'Doctor') {
+			//alert('profile not a doctor');
+			$('#nextbutton').click(function(e) {
 
-$(document).ready(function(){
-	
-	$("#nextbutton").attr("disabled","disabled");
-	var loginprofile = '${E.profile}';
-	//alert(loginprofile);	
-	if(loginprofile == 'Doctor')
-	{
-		$("#nextbutton").removeAttr("disabled");
-	}
-	
-});
+				e.preventDefault();
+				alert('Only for Doctors Use');
 
+			});
+		}
+
+	});
 </script>
 
 <body>
